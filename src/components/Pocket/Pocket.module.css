@@ -1,0 +1,23 @@
+.Pocket {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  background-color: #222;
+  color: #ddd;
+}
+.Pocket:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.Currency {
+  font-weight: bold;
+}
+
+.Amount span {
+  font-size: 24px;
+  margin-left: 3px;
+}
