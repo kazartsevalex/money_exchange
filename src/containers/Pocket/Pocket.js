@@ -7,22 +7,48 @@ class Pocket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currency: 'GBP',
-      sign: '£',
-      amount: 50
+      pockets: [{
+        currency: 'GBP',
+        sign: '£',
+        amount: 50.00
+      }, {
+        currency: 'EUR',
+        sign: '€',
+        amount: 50.00
+      }, {
+        currency: 'USD',
+        sign: '$',
+        amount: 50.00
+      }]
     };
+  }
+
+  getPocketInfo = currency => {
+    for (let index in this.state.pockets) {
+      if (this.state.pockets[index].currency === currency) {
+        return this.state.pockets[index];
+      }
+    }
+
+    return null;
   }
 
   render() {
     const inClass = [classes.HistoryListItemIcon, classes.HistoryListItemIconIn].join(' ');
     const outClass = [classes.HistoryListItemIcon, classes.HistoryListItemIconOut].join(' ');
 
+    const { match: { params } } = this.props;
+    console.log(this.props)
+    const pocket = this.getPocketInfo(params.currency);
+
+    if (!pocket) return null;
+
     return (
       <div className={classes.Pocket}>
         <div className={classes.PocketHeader}>
           <div className={classes.Amount}>
-            {this.state.sign}
-            <span>{this.state.amount}</span>
+            {pocket.sign}
+            <span>{pocket.amount}</span>
           </div>
         </div>
         <div className={classes.PocketActions}>
@@ -37,7 +63,7 @@ class Pocket extends React.Component {
                 From Nikolay Storonsky
               </div>
               <div className={inClass}>
-                <span>{this.state.sign}</span>5
+                <span>{pocket.sign}</span>5
               </div>
             </div>
             <div className={classes.HistoryListItem}>
@@ -46,7 +72,7 @@ class Pocket extends React.Component {
                 To Nikolay Storonsky
               </div>
               <div className={outClass}>
-                <span>{this.state.sign}</span>5
+                <span>{pocket.sign}</span>5
               </div>
             </div>
           </div>
