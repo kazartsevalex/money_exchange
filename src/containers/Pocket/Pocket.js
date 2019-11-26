@@ -1,32 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import classes from './Pocket.module.css';
 
 class Pocket extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pockets: [{
-        currency: 'GBP',
-        sign: '£',
-        amount: 50.00
-      }, {
-        currency: 'EUR',
-        sign: '€',
-        amount: 50.00
-      }, {
-        currency: 'USD',
-        sign: '$',
-        amount: 50.00
-      }]
-    };
-  }
-
   getPocketInfo = currency => {
-    for (let index in this.state.pockets) {
-      if (this.state.pockets[index].currency === currency) {
-        return this.state.pockets[index];
+    for (let index in this.props.pockets) {
+      if (this.props.pockets[index].currency === currency) {
+        return this.props.pockets[index];
       }
     }
 
@@ -38,7 +20,6 @@ class Pocket extends React.Component {
     const outClass = [classes.HistoryListItemIcon, classes.HistoryListItemIconOut].join(' ');
 
     const { match: { params } } = this.props;
-    console.log(this.props)
     const pocket = this.getPocketInfo(params.currency);
 
     if (!pocket) return null;
@@ -82,4 +63,10 @@ class Pocket extends React.Component {
   }
 }
 
-export default Pocket;
+const mapStateToProps = state => {
+  return {
+    pockets: state.pocket.pockets
+  };
+}
+
+export default connect(mapStateToProps, null)(Pocket);

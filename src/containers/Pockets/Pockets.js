@@ -1,36 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import PocketItem from '../../components/PocketItem/PocketItem';
 
 class Pockets extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pockets: [{
-        currency: 'GBP',
-        sign: '£',
-        amount: 50.00
-      }, {
-        currency: 'EUR',
-        sign: '€',
-        amount: 50.00
-      }, {
-        currency: 'USD',
-        sign: '$',
-        amount: 50.00
-      }]
-    };
-  }
-
   render() {
     const pocketItems = [];
-    for (let pocket in this.state.pockets) {
+    for (let pocket in this.props.pockets) {
       pocketItems.push(
         <PocketItem
-          key={this.state.pockets[pocket].currency}
-          currency={this.state.pockets[pocket].currency}
-          amount={this.state.pockets[pocket].amount}
-          currencySign={this.state.pockets[pocket].sign}
+          key={this.props.pockets[pocket].currency}
+          currency={this.props.pockets[pocket].currency}
+          amount={this.props.pockets[pocket].amount}
+          currencySign={this.props.pockets[pocket].sign}
         />
       );
     }
@@ -43,4 +25,10 @@ class Pockets extends React.Component {
   }
 }
 
-export default Pockets;
+const mapStateToProps = state => {
+  return {
+    pockets: state.pocket.pockets
+  };
+}
+
+export default connect(mapStateToProps, null)(Pockets);
