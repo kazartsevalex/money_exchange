@@ -10,6 +10,7 @@ function App() {
     <div>
       <Route path='/' exact component={Pockets} />
       <Route path='/:currency' exact component={Pocket} />
+      <Route path='/:currency/exchange' component={Pocket} />
     </div>
   );
 }

@@ -24,16 +24,18 @@ class Pocket extends React.Component {
 
     if (!pocket) return null;
 
+    const thisUrl = this.props.match.url;
+
     return (
       <div className={classes.Pocket}>
         <div className={classes.PocketHeader}>
           <div className={classes.Amount}>
             {pocket.sign}
-            <span>{pocket.amount}</span>
+            <span>{pocket.amount.toFixed(2)}</span>
           </div>
         </div>
         <div className={classes.PocketActions}>
-          <Link to="">Exchange</Link>
+          <Link to={`${thisUrl}/exchange`}>Exchange</Link>
         </div>
         <div className={classes.PocketHistory}>
           <h2>Operations history</h2>

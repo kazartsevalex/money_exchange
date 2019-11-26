@@ -11,7 +11,7 @@ const pocketItem = (props) => {
       </div>
       <div className={classes.Amount}>
         {props.currencySign}
-        <span>{props.amount}</span>
+        <span>{props.amount.toFixed(2)}</span>
       </div>
     </Link>
   );
