@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import classes from './Pocket.module.css';
+import History from '../../components/History/History';
 
 class Pocket extends React.Component {
   getPocketInfo = currency => {
@@ -16,15 +17,14 @@ class Pocket extends React.Component {
   }
 
   render() {
-    const inClass = [classes.HistoryListItemIcon, classes.HistoryListItemIconIn].join(' ');
-    const outClass = [classes.HistoryListItemIcon, classes.HistoryListItemIconOut].join(' ');
-
     const { match: { params } } = this.props;
     const pocket = this.getPocketInfo(params.currency);
 
     if (!pocket) return null;
 
     const thisUrl = this.props.match.url;
+
+    console.log(params)
 
     return (
       <div className={classes.Pocket}>
@@ -35,30 +35,10 @@ class Pocket extends React.Component {
           </div>
         </div>
         <div className={classes.PocketActions}>
-          <Link to={`${thisUrl}/exchange`}>Exchange</Link>
+          <Link to={`${params.currency}/exchange`}>Exchange</Link>
         </div>
-        <div className={classes.PocketHistory}>
-          <h2>Operations history</h2>
-          <div className={classes.HistoryList}>
-            <div className={classes.HistoryListItem}>
-              <div className={inClass}>+</div>
-              <div className={classes.HistoryListItemMessage}>
-                From Nikolay Storonsky
-              </div>
-              <div className={inClass}>
-                <span>{pocket.sign}</span>5
-              </div>
-            </div>
-            <div className={classes.HistoryListItem}>
-              <div className={outClass}>-</div>
-              <div className={classes.HistoryListItemMessage}>
-                To Nikolay Storonsky
-              </div>
-              <div className={outClass}>
-                <span>{pocket.sign}</span>5
-              </div>
-            </div>
-          </div>
+        <div className={classes.PocketBottom}>
+          <Route path={`/${params.currency}`} exact component={History} />
         </div>
       </div>
     );

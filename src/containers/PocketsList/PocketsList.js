@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PocketItem from '../../components/PocketItem/PocketItem';
 
-class Pockets extends React.Component {
+class PocketsList extends React.Component {
   render() {
     const pocketItems = [];
     for (let pocket in this.props.pockets) {
@@ -31,4 +31,4 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, null)(Pockets);
+export default connect(mapStateToProps, null)(PocketsList);
