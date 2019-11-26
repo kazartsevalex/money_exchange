@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Pocket from '../../components/Pocket/Pocket';
+import PocketItem from '../../components/PocketItem/PocketItem';
 
 class Pockets extends React.Component {
   constructor(props) {
@@ -9,25 +9,24 @@ class Pockets extends React.Component {
       pockets: [{
         currency: 'GBP',
         sign: '£',
-        amount: 50
+        amount: 50.00
       }, {
         currency: 'EUR',
         sign: '€',
-        amount: 50
+        amount: 50.00
       }, {
         currency: 'USD',
         sign: '$',
-        amount: 50
+        amount: 50.00
       }]
     };
   }
 
   render() {
-    const pockets = [];
+    const pocketItems = [];
     for (let pocket in this.state.pockets) {
-      console.log(this.state.pockets[pocket])
-      pockets.push(
-        <Pocket
+      pocketItems.push(
+        <PocketItem
           key={this.state.pockets[pocket].currency}
           currency={this.state.pockets[pocket].currency}
           amount={this.state.pockets[pocket].amount}
@@ -38,7 +37,7 @@ class Pockets extends React.Component {
 
     return (
       <div>
-        {pockets}
+        {pocketItems}
       </div>
     );
   }

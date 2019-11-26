@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-import classes from './Pocket.module.css';
+import classes from './PocketItem.module.css';
 
-const pocket = (props) => {
+const pocketItem = (props) => {
   return (
-    <div className={classes.Pocket}>
+    <Link to={`/${props.currency}`} className={classes.Pocket}>
       <div className={classes.Currency}>
         {props.currency}
       </div>
@@ -12,8 +13,8 @@ const pocket = (props) => {
         {props.currencySign}
         <span>{props.amount}</span>
       </div>
-    </div>
+    </Link>
   );
 }
 
-export default pocket;
+export default pocketItem;

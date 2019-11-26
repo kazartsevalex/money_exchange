@@ -1,0 +1,97 @@
+.Pocket {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 300px auto auto;
+  grid-template-areas:
+    "pocket_header"
+    "pocket_actions"
+    "pocket_history";
+}
+
+.PocketHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  grid-area: pocket_header;
+  background: rgb(2,0,36);
+  background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(3,19,83,1) 50%, rgba(51,0,88,1) 100%);
+}
+
+.Amount {
+  color: #fff;
+  font-size: 25px;
+}
+
+.Amount span {
+  font-size: 50px;
+}
+
+.PocketActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  grid-area: pocket_actions;
+}
+
+.PocketActions a {
+  font-size: 20px;
+  color: #ddd;
+  text-decoration: none;
+  display: block;
+  padding: 15px 20px;
+  background-color: #222;
+}
+.PocketActions a:hover {
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.PocketHistory {
+  grid-area: pocket_history;
+  padding: 25px;
+}
+
+.PocketHistory h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.HistoryListItem {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 0 0;
+}
+
+.HistoryListItemIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.HistoryListItemIcon span {
+  font-size: 16px;
+}
+
+.HistoryListItemIconIn {
+  background-color: #48BB78;
+}
+
+.HistoryListItemIconOut {
+  background-color: #F56565;
+}
+
+.HistoryListItemMessage {
+  font-size: 18px;
+  padding: 0 25px;
+  width: calc(100% - 50px - 50px - 25px - 25px);
+}
