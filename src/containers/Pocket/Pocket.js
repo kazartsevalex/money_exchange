@@ -37,7 +37,7 @@ class Pocket extends React.Component {
           </div>
         </div>
         <div className={classes.PocketActions}>
-          <Link to={`${params.currency}/exchange`}>Exchange</Link>
+          <Link to={`/${params.currency}/exchange`}>Exchange</Link>
         </div>
         <div className={classes.PocketBottom}>
           <Route path={`/${params.currency}`} exact component={History} />
