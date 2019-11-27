@@ -4,8 +4,14 @@ import { connect } from 'react-redux';
 
 import classes from './Pocket.module.css';
 import History from '../../components/History/History';
+import * as actions from '../../store/actions/index';
 
 class Pocket extends React.Component {
+  componentDidMount() {
+    this.props.onGetExchangeRates(this.props.match.params.currency);
+    setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
+  }
+
   getPocketInfo = currency => {
     for (let index in this.props.pockets) {
       if (this.props.pockets[index].currency === currency) {
@@ -43,8 +49,15 @@ class Pocket extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    pockets: state.pocket.pockets
+    pockets: state.pocket.pockets,
+    rates: state.rates
   };
 }
 
-export default connect(mapStateToProps, null)(Pocket);
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetExchangeRates: (currencyFrom) => dispatch(actions.getExchangeRates(currencyFrom))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pocket);

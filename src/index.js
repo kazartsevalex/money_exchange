@@ -9,11 +9,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import pocketReducer from './store/reducers/pocket';
+import ratesReducer from './store/reducers/rates';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
-  pocket: pocketReducer
+  pocket: pocketReducer,
+  rates: ratesReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(
