@@ -9,24 +9,43 @@ import * as actions from '../../store/actions/index';
 class Pocket extends React.Component {
   componentDidMount() {
     this.props.onGetExchangeRates(this.props.match.params.currency);
-    setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
+    // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
   }
 
-  getPocketInfo = currency => {
+  getPockets = currency => {
+    let pocket = null;
+    const otherPockets = [];
+
     for (let index in this.props.pockets) {
       if (this.props.pockets[index].currency === currency) {
-        return this.props.pockets[index];
+        pocket = this.props.pockets[index];
+      } else {
+        otherPockets.push(this.props.pockets[index]);
       }
     }
 
-    return null;
+    return [pocket, otherPockets];
   }
 
   render() {
     const { match: { params } } = this.props;
-    const pocket = this.getPocketInfo(params.currency);
+    const [pocket, otherPockets] = this.getPockets(params.currency);
 
     if (!pocket) return <Redirect to='/' />;
+
+    for (let i = 0; i < otherPockets.length; i++) {
+      otherPockets[i] = (
+        <Link
+          to={`/${params.currency}/exchange/${otherPockets[i].currency}`}
+          className={classes.PocketToExchange}
+          key={otherPockets[i].currency}
+        >
+          <header>To {otherPockets[i].currency}</header>
+          <div><span>{otherPockets[i].sign}</span>{otherPockets[i].amount.toFixed(2)}</div>
+          <footer>{pocket.sign} 1 = {otherPockets[i].sign} {this.props.rates.rates[otherPockets[i].currency].toFixed(2)}</footer>
+        </Link>
+      )
+    }
 
     return (
       <div className={classes.Pocket}>
@@ -37,10 +56,17 @@ class Pocket extends React.Component {
           </div>
         </div>
         <div className={classes.PocketActions}>
-          <Link to={`/${params.currency}/exchange`}>Exchange</Link>
+          <Route path={`/${params.currency}`} exact>
+            <Link to={`/${params.currency}/exchange`}>Exchange</Link>
+          </Route>
         </div>
         <div className={classes.PocketBottom}>
           <Route path={`/${params.currency}`} exact component={History} />
+          <Route path={`/${params.currency}/exchange`} exact>
+            <div className={classes.OtherPockets}>
+              {otherPockets}
+            </div>
+          </Route>
         </div>
       </div>
     );
