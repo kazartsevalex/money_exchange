@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import classes from './Pocket.module.css';
@@ -20,11 +20,7 @@ class Pocket extends React.Component {
     const { match: { params } } = this.props;
     const pocket = this.getPocketInfo(params.currency);
 
-    if (!pocket) return null;
-
-    const thisUrl = this.props.match.url;
-
-    console.log(params)
+    if (!pocket) return <Redirect to='/' />;
 
     return (
       <div className={classes.Pocket}>
