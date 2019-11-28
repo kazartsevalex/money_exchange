@@ -14,7 +14,6 @@ class PocketsList extends React.Component {
           currency={this.props.pockets[pocket].currency}
           amount={this.props.pockets[pocket].amount}
           currencySign={this.props.pockets[pocket].sign}
-          clicked={this.props.setPocketFrom}
         />
       );
     }
@@ -33,10 +32,4 @@ const mapStateToProps = state => {
   };
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setPocketFrom: (currencyFrom) => dispatch(actions.setPocketFrom(currencyFrom))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PocketsList);
+export default connect(mapStateToProps, null)(PocketsList);

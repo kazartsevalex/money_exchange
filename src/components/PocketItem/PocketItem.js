@@ -8,7 +8,6 @@ const pocketItem = (props) => {
     <Link
       to={`/${props.currency}`}
       className={classes.Pocket}
-      onClick={() => props.clicked(props.currency)}
     >
       <div className={classes.Currency}>
         {props.currency}

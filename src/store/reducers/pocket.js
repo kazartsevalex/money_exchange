@@ -18,25 +18,13 @@ const initialState = {
       sign: '$',
       amount: 50.00
     }
-  },
-  pocketFrom: null,
-  pocketTo: null
+  }
 };
 
 const pocketReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_INITIAL_POCKETS:
       return state;
-
-    case actionTypes.SET_POCKET_FROM:
-      return updateObject(state, {
-        pocketFrom: action.pocketFrom
-      });
-
-    case actionTypes.SET_POCKET_TO:
-      return updateObject(state, {
-        pocketTo: action.pocketTo
-      });
 
     default:
       return state;
