@@ -7,6 +7,20 @@ export const getInitialPockets = () => {
   };
 };
 
+export const setPocketFrom = (currency) => {
+  return {
+    type: actionTypes.SET_POCKET_FROM,
+    pocketFrom: currency
+  };
+}
+
+export const setPocketTo = (currency) => {
+  return {
+    type: actionTypes.SET_POCKET_TO,
+    pocketTo: currency
+  };
+}
+
 export const getExchangeRatesStart = () => {
   return {
     type: actionTypes.GET_EXCHANGE_RATES_START

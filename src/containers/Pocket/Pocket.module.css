@@ -20,11 +20,12 @@
 
 .Amount {
   color: #fff;
-  font-size: 25px;
+  font-size: 50px;
 }
 
 .Amount span {
-  font-size: 50px;
+  font-size: 25px;
+  margin-left: 15px;
 }
 
 .PocketActions {

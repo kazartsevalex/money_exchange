@@ -8,61 +8,61 @@ import * as actions from '../../store/actions/index';
 
 class Pocket extends React.Component {
   componentDidMount() {
-    this.props.onGetExchangeRates(this.props.match.params.currency);
+    this.props.onGetExchangeRates(this.props.match.params.currencyFrom);
     // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
   }
 
-  getPockets = currency => {
-    let pocket = null;
+  getOtherPockets = () => {
     const otherPockets = [];
+    const { pockets, pocketFrom, pocketTo } = this.props.pockets;
 
-    for (let index in this.props.pockets) {
-      if (this.props.pockets[index].currency === currency) {
-        pocket = this.props.pockets[index];
-      } else {
-        otherPockets.push(this.props.pockets[index]);
+    for (let index in pockets) {
+      if (![pocketFrom, pocketTo].includes(pockets[index].currency)) {
+        otherPockets.push(
+          <Link
+            to={`/${pocketFrom}/exchange/${pockets[index].currency}`}
+            className={classes.PocketToExchange}
+            key={pockets[index].currency}
+            onClick={() => this.props.setPocketTo(pockets[index].currency)}
+          >
+            <header>To {pockets[index].currency}</header>
+            <div><span>{pockets[index].sign}</span>{pockets[index].amount.toFixed(2)}</div>
+            <footer>{pockets[pocketFrom].sign} 1 = {pockets[index].sign} {this.props.rates.rates[pockets[index].currency].toFixed(2)}</footer>
+          </Link>
+        );
       }
     }
 
-    return [pocket, otherPockets];
+    return otherPockets;
   }
 
   render() {
     const { match: { params } } = this.props;
-    const [pocket, otherPockets] = this.getPockets(params.currency);
+    const pocketFrom = this.props.pockets.pockets[this.props.pockets.pocketFrom] || null;
 
-    if (!pocket) return <Redirect to='/' />;
-
-    for (let i = 0; i < otherPockets.length; i++) {
-      otherPockets[i] = (
-        <Link
-          to={`/${params.currency}/exchange/${otherPockets[i].currency}`}
-          className={classes.PocketToExchange}
-          key={otherPockets[i].currency}
-        >
-          <header>To {otherPockets[i].currency}</header>
-          <div><span>{otherPockets[i].sign}</span>{otherPockets[i].amount.toFixed(2)}</div>
-          <footer>{pocket.sign} 1 = {otherPockets[i].sign} {this.props.rates.rates[otherPockets[i].currency].toFixed(2)}</footer>
-        </Link>
-      )
-    }
+    if (!pocketFrom) return <Redirect to='/' />;
+    const otherPockets = this.getOtherPockets();
+    const pocketTo = this.props.pockets.pockets[this.props.pockets.pocketTo] || null;
 
     return (
       <div className={classes.Pocket}>
         <div className={classes.PocketHeader}>
           <div className={classes.Amount}>
-            {pocket.sign}
-            <span>{pocket.amount.toFixed(2)}</span>
+            <Route path='/:currencyFrom/exchange/:currencyTo'>
+              From
+            </Route>
+            <span>{pocketFrom.sign}</span>
+            {pocketFrom.amount.toFixed(2)}
           </div>
         </div>
         <div className={classes.PocketActions}>
-          <Route path={`/${params.currency}`} exact>
-            <Link to={`/${params.currency}/exchange`}>Exchange</Link>
+          <Route path='/:currencyFrom' exact>
+            <Link to={`/${params.currencyFrom}/exchange`}>Exchange</Link>
           </Route>
         </div>
         <div className={classes.PocketBottom}>
-          <Route path={`/${params.currency}`} exact component={History} />
-          <Route path={`/${params.currency}/exchange`} exact>
+          <Route path='/:currencyFrom' exact component={History} />
+          <Route path='/:currencyFrom/exchange' exact>
             <div className={classes.OtherPockets}>
               {otherPockets}
             </div>
@@ -75,15 +75,17 @@ class Pocket extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    pockets: state.pocket.pockets,
+    pockets: state.pocket,
     rates: state.rates
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetExchangeRates: (currencyFrom) => dispatch(actions.getExchangeRates(currencyFrom))
+    onGetExchangeRates: (currencyFrom) => dispatch(actions.getExchangeRates(currencyFrom)),
+    setPocketTo: (currencyTo) => dispatch(actions.setPocketTo(currencyTo))
   };
 };
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pocket);

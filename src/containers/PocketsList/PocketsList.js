@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PocketItem from '../../components/PocketItem/PocketItem';
+import * as actions from '../../store/actions/index';
 
 class PocketsList extends React.Component {
   render() {
@@ -13,6 +14,7 @@ class PocketsList extends React.Component {
           currency={this.props.pockets[pocket].currency}
           amount={this.props.pockets[pocket].amount}
           currencySign={this.props.pockets[pocket].sign}
+          clicked={this.props.setPocketFrom}
         />
       );
     }
@@ -31,4 +33,10 @@ const mapStateToProps = state => {
   };
 }
 
-export default connect(mapStateToProps, null)(PocketsList);
+const mapDispatchToProps = dispatch => {
+  return {
+    setPocketFrom: (currencyFrom) => dispatch(actions.setPocketFrom(currencyFrom))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PocketsList);

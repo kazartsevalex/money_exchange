@@ -9,9 +9,9 @@ function App() {
   return (
     <div>
       <Route path='/' exact component={PocketsList} />
-      <Route path='/:currency' exact component={Pocket} />
-      <Route path='/:currency/exchange' exact component={Pocket} />
-      <Route path='/:currency/exchange/:currency2' component={Pocket} />
+      <Route path='/:currencyFrom' exact component={Pocket} />
+      <Route path='/:currencyFrom/exchange' exact component={Pocket} />
+      <Route path='/:currencyFrom/exchange/:currencyTo' component={Pocket} />
     </div>
   );
 }
