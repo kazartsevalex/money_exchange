@@ -7,7 +7,6 @@ import History from '../../components/History/History';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import * as actions from '../../store/actions/index';
-// import { updateObject } from '../../../shared/utility';
 
 class Pocket extends React.Component {
   constructor(props) {

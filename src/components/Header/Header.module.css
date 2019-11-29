@@ -1,0 +1,25 @@
+.Header {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.Link {
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ddd;
+  text-align: center;
+  padding: 15px 20px;
+  height: 50px;
+  box-sizing: border-box;
+}
+.Link:hover, .Current {
+  color: #fff;
+  background-color: #222;
+}
