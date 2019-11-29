@@ -1,7 +1,14 @@
 .InputAmount {
-  border: 1px solid #222;
   padding: 15px;
   background-color: #fff;
   color: #000;
+  font-size: 20px;
+}
+.InputAmount span {
+  margin-left: 5px;
+}
+.InputAmount input {
+  background: transparent;
+  border: none;
   font-size: 25px;
 }

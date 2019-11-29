@@ -12,8 +12,8 @@ class Pocket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      outputAmount: 0,
-      amountToExchange: 0
+      currencyFromAmount: 0,
+      currencyToAmount: 0
     };
   }
 
@@ -45,13 +45,27 @@ class Pocket extends React.Component {
     return otherPockets;
   }
 
-  setOutputAmount = (e, currencyTo) => {
-    const amountToExchange = e.target.value;
+  getValidValue = (val) => {
+    return val.match(/[0-9]*\.?\d{0,2}/)[0] || 0;
+  }
+
+  setCurrencyFromAmount = (e, currencyTo) => {
+    const amountToExchange = this.getValidValue(e.target.value.trim());
     const outputValue = this.props.rates.rates[currencyTo] * parseFloat(amountToExchange);
 
     this.setState({
-      outputAmount: outputValue.toFixed(2),
-      amountToExchange: amountToExchange
+      currencyFromAmount: amountToExchange,
+      currencyToAmount: outputValue.toFixed(2)
+    });
+  }
+
+  setCurrencyToAmount = (e, currencyTo) => {
+    const amountToExchange = this.getValidValue(e.target.value.trim());
+    const outputValue = parseFloat(amountToExchange) / this.props.rates.rates[currencyTo];
+
+    this.setState({
+      currencyFromAmount: outputValue.toFixed(2),
+      currencyToAmount: amountToExchange
     });
   }
 
@@ -65,31 +79,47 @@ class Pocket extends React.Component {
 
     let pocketToOutput = null;
     let fromText = null;
+    let exchangeUI = null;
     let input = null;
-    let showRates = null;
+    let currentPocketAmountClass = [classes.Amount];
+
     if (pocketTo) {
       fromText = 'From';
+      currentPocketAmountClass = [classes.Amount, classes.AmountHalf].join(' ');
       input = (
         <div className={classes.InputContainer}>
           <Input
-            value={this.state.amountToExchange}
-            changed={(e) => this.setOutputAmount(e, params.currencyTo)}
+            sign="-"
+            currencySign={pocketFrom.sign}
+            value={this.state.currencyFromAmount}
+            changed={(e) => this.setCurrencyFromAmount(e, params.currencyTo)}
           />
         </div>
       );
 
-      showRates = `${pocketFrom.sign} 1 = ${pocketTo.sign} ${this.props.rates.rates[pocketTo.currency].toFixed(2)}`;
-
       pocketToOutput = (
         <div className={classes.PocketTo}>
-          <div className={classes.Amount}>
+          <div className={currentPocketAmountClass}>
             To
             <span>{pocketTo.sign}</span>
             {pocketTo.amount.toFixed(2)}
           </div>
-          <div className={classes.AmountSend}>
-            +<span>{pocketTo.sign}</span>
-            {this.state.outputAmount}
+          <Input
+            sign="+"
+            currencySign={pocketTo.sign}
+            value={this.state.currencyToAmount}
+            changed={(e) => this.setCurrencyToAmount(e, params.currencyTo)}
+          />
+        </div>
+      );
+
+      exchangeUI = (
+        <div className={classes.ExchangeUI}>
+          {pocketFrom.sign} 1 = {pocketTo.sign} {this.props.rates.rates[pocketTo.currency].toFixed(5)}
+          <div
+            className={classes.AmountSend}
+          >
+            Exchange
           </div>
         </div>
       );
@@ -98,7 +128,7 @@ class Pocket extends React.Component {
     return (
       <div className={classes.Pocket}>
         <div className={classes.PocketHeader}>
-          <div className={classes.Amount}>
+          <div className={currentPocketAmountClass}>
             {fromText}
             <span>{pocketFrom.sign}</span>
             {pocketFrom.amount.toFixed(2)}
@@ -109,7 +139,6 @@ class Pocket extends React.Component {
           <Route path='/:currencyFrom' exact>
             <Link to={`/${params.currencyFrom}/exchange`}>Exchange</Link>
           </Route>
-          {showRates}
         </div>
         <div className={classes.PocketBottom}>
           <Route path='/:currencyFrom' exact component={History} />
@@ -119,6 +148,7 @@ class Pocket extends React.Component {
             </div>
           </Route>
           {pocketToOutput}
+          {exchangeUI}
         </div>
       </div>
     );

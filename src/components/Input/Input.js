@@ -4,12 +4,15 @@ import classes from './Input.module.css';
 
 const input = (props) => {
   return (
-    <input
-      className={classes.InputAmount}
-      type="text"
-      value={props.value}
-      onChange={props.changed}
-    />
+    <div className={classes.InputAmount}>
+      {props.sign}
+      <span>{props.currencySign}</span>
+      <input
+        type="text"
+        value={props.value}
+        onChange={props.changed}
+      />
+    </div>
   );
 }
 
