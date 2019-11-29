@@ -1,0 +1,13 @@
+.Button {
+  padding: 15px 20px;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #48BB78;
+  border: none;
+}
+.Button:disabled {
+  color: #ddd;
+  cursor: default;
+  background-color: #222;
+}

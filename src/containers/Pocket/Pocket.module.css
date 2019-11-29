@@ -44,17 +44,6 @@
   margin-left: 15px;
 }
 
-.AmountSend {
-  padding: 15px 20px;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #48BB78;
-}
-.AmountSend span {
-  font-size: 20px;
-}
-
 .PocketActions {
   display: flex;
   justify-content: center;

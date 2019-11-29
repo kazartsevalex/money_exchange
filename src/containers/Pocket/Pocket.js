@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import classes from './Pocket.module.css';
 import History from '../../components/History/History';
 import Input from '../../components/Input/Input';
+import Button from '../../components/Button/Button';
 import * as actions from '../../store/actions/index';
 // import { updateObject } from '../../../shared/utility';
 
@@ -80,6 +81,10 @@ class Pocket extends React.Component {
     });
   }
 
+  onExchangeClick = () => {
+console.log(111)
+  }
+
   render() {
     const { match: { params } } = this.props;
     const pocketFrom = this.props.pockets.pockets[params.currencyFrom] || null;
@@ -124,14 +129,17 @@ class Pocket extends React.Component {
         </div>
       );
 
+      const disabled = parseFloat(this.state.currencyFromAmount) === parseFloat(this.state.currencyToAmount);
+
       exchangeUI = (
         <div className={classes.ExchangeUI}>
           {pocketFrom.sign} 1 = {pocketTo.sign} {this.props.rates.rates[pocketTo.currency].toFixed(5)}
-          <div
-            className={classes.AmountSend}
+          <Button
+            disabled={disabled}
+            clicked={this.onExchangeClick}
           >
             Exchange
-          </div>
+          </Button>
         </div>
       );
     }
