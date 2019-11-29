@@ -7,6 +7,16 @@ export const getInitialPockets = () => {
   };
 };
 
+export const makeExchange = (amountFrom, amountTo, currencyFrom, currencyTo) => {
+  return {
+    type: actionTypes.MAKE_EXCHANGE,
+    amountFrom: amountFrom,
+    amountTo: amountTo,
+    currencyFrom: currencyFrom,
+    currencyTo: currencyTo
+  }
+}
+
 export const getExchangeRatesStart = () => {
   return {
     type: actionTypes.GET_EXCHANGE_RATES_START

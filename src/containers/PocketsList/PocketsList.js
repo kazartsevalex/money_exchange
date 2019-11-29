@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import PocketItem from '../../components/PocketItem/PocketItem';
-import * as actions from '../../store/actions/index';
 
 class PocketsList extends React.Component {
   render() {

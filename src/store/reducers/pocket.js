@@ -26,6 +26,24 @@ const pocketReducer = (state = initialState, action) => {
     case actionTypes.GET_INITIAL_POCKETS:
       return state;
 
+    case actionTypes.MAKE_EXCHANGE:
+      const updatedFrom = updateObject(state.pockets[action.currencyFrom], {
+        amount: state.pockets[action.currencyFrom].amount - action.amountFrom
+      });
+
+      const updatedTo = updateObject(state.pockets[action.currencyTo], {
+        amount: state.pockets[action.currencyTo].amount + parseFloat(action.amountTo)
+      });
+
+      const updatedPockets = updateObject(state.pockets, {
+        [action.currencyFrom]: updatedFrom,
+        [action.currencyTo]: updatedTo
+      });
+
+      return updateObject(state, {
+        pockets: updatedPockets
+      });
+
     default:
       return state;
   }

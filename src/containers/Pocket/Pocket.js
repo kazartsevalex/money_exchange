@@ -81,10 +81,6 @@ class Pocket extends React.Component {
     });
   }
 
-  onExchangeClick = () => {
-console.log(111)
-  }
-
   render() {
     const { match: { params } } = this.props;
     const pocketFrom = this.props.pockets.pockets[params.currencyFrom] || null;
@@ -136,7 +132,14 @@ console.log(111)
           {pocketFrom.sign} 1 = {pocketTo.sign} {this.props.rates.rates[pocketTo.currency].toFixed(5)}
           <Button
             disabled={disabled}
-            clicked={this.onExchangeClick}
+            clicked={() => {
+              this.props.makeExchange(
+                this.state.currencyFromAmount,
+                this.state.currencyToAmount,
+                pocketFrom.currency,
+                pocketTo.currency
+              )
+            }}
           >
             Exchange
           </Button>
@@ -183,7 +186,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetExchangeRates: (currencyFrom) => dispatch(actions.getExchangeRates(currencyFrom))
+    onGetExchangeRates: (currencyFrom) => dispatch(actions.getExchangeRates(currencyFrom)),
+    makeExchange: (amountFrom, amountTo, currencyFrom, currencyTo) => dispatch(actions.makeExchange(amountFrom, amountTo, currencyFrom, currencyTo))
   };
 };
 
