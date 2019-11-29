@@ -8,24 +8,40 @@
     "pocket_history";
 }
 
-.PocketHeader {
+.PocketHeader, .PocketTo {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  flex-flow: column;
+  flex-flow: row;
   grid-area: pocket_header;
   background: rgb(2,0,36);
   background: linear-gradient(45deg, rgba(2,0,36,1) 0%, rgba(3,19,83,1) 50%, rgba(51,0,88,1) 100%);
+}
+
+.PocketTo {
+  grid-area: unset;
+  margin: -25px;
+  height: 200px;
 }
 
 .Amount {
   color: #fff;
   font-size: 50px;
 }
-
 .Amount span {
   font-size: 25px;
   margin-left: 15px;
+}
+
+.AmountSend {
+  padding: 15px;
+  color: #fff;
+  font-size: 25px;
+  cursor: pointer;
+  background-color: #48BB78;
+}
+.AmountSend span {
+  font-size: 20px;
 }
 
 .PocketActions {
