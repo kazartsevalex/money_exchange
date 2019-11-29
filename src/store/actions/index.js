@@ -32,6 +32,7 @@ export const getExchangeRatesSuccess = (rates) => {
 
 export const getExchangeRates = (currencyFrom) => {
   return dispatch => {
+    dispatch(getExchangeRatesStart());
     const token = 'cf7828a3ad4847a2baa40bef46c3fd78';
     const queryParams = '?app_id=' + token + '&symbols=GBP,EUR';
 
@@ -39,15 +40,16 @@ export const getExchangeRates = (currencyFrom) => {
       .then(res => {
         const rates = res.data.rates;
 
-        if (currencyFrom !== 'USD') {
+        if (currencyFrom === 'USD') {
+          rates[currencyFrom] = 1;
+        } else {
           const tmp = rates[currencyFrom];
           rates[currencyFrom] = 1;
           rates['USD'] = 1 / tmp;
 
-          const allCurr = Object.keys(rates);
-          for (let i = 0; i < allCurr.length; i++) {
-            if (!['USD', currencyFrom].includes(allCurr[i])) {
-              rates[allCurr[i]] = rates[allCurr[i]] * rates['USD'];
+          for (let curr in rates) {
+            if (curr !== 'USD' && curr !== currencyFrom) {
+              rates[curr] = rates[curr] * rates['USD'];
             }
           }
         }

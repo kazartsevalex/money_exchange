@@ -12,9 +12,7 @@ const initialState = {
 const ratesReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_EXCHANGE_RATES_START:
-      return updateObject(state, {
-        rates: action.rates
-      });
+      return state;
 
     case actionTypes.GET_EXCHANGE_RATES_SUCCESS:
       return updateObject(state, {

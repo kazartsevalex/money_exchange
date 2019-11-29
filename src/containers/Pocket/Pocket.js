@@ -18,6 +18,7 @@ class Pocket extends React.Component {
   }
 
   componentDidMount() {
+    console.log('currency from: ', this.props.match.params.currencyFrom)
     this.props.onGetExchangeRates(this.props.match.params.currencyFrom);
     // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
   }
@@ -27,7 +28,7 @@ class Pocket extends React.Component {
     const { pockets } = this.props.pockets;
 
     for (let index in pockets) {
-      if (![params.currencyFrom, params.currencyTo].includes(pockets[index].currency)) {
+      if (params.currencyFrom !== pockets[index].currency) {
         otherPockets.push(
           <Link
             to={`/${params.currencyFrom}/exchange/${pockets[index].currency}`}
@@ -137,7 +138,11 @@ class Pocket extends React.Component {
                 this.state.currencyToAmount,
                 pocketFrom.currency,
                 pocketTo.currency
-              )
+              );
+              this.setState({
+                currencyFromAmount: 0,
+                currencyToAmount: 0
+              });
             }}
           >
             Exchange
