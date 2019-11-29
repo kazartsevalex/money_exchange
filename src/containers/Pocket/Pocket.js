@@ -50,7 +50,12 @@ class Pocket extends React.Component {
   }
 
   setCurrencyFromAmount = (e, currencyTo) => {
-    const amountToExchange = this.getValidValue(e.target.value.trim());
+    let amountToExchange = this.getValidValue(e.target.value.trim());
+    const maxAmount = this.props.pockets.pockets[this.props.match.params.currencyFrom].amount;
+    if (amountToExchange > maxAmount) {
+      amountToExchange = maxAmount;
+    }
+
     const outputValue = this.props.rates.rates[currencyTo] * parseFloat(amountToExchange);
 
     this.setState({
@@ -60,8 +65,14 @@ class Pocket extends React.Component {
   }
 
   setCurrencyToAmount = (e, currencyTo) => {
-    const amountToExchange = this.getValidValue(e.target.value.trim());
-    const outputValue = parseFloat(amountToExchange) / this.props.rates.rates[currencyTo];
+    let amountToExchange = this.getValidValue(e.target.value.trim());
+    const maxAmount = this.props.pockets.pockets[this.props.match.params.currencyFrom].amount;
+    let outputValue = parseFloat(amountToExchange) / this.props.rates.rates[currencyTo];
+
+    if (outputValue > maxAmount) {
+      outputValue = maxAmount;
+    }
+    amountToExchange = (this.props.rates.rates[currencyTo] * parseFloat(outputValue)).toFixed(2);
 
     this.setState({
       currencyFromAmount: outputValue.toFixed(2),

@@ -45,9 +45,9 @@
 }
 
 .AmountSend {
-  padding: 15px;
+  padding: 15px 20px;
   color: #fff;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   background-color: #48BB78;
 }
