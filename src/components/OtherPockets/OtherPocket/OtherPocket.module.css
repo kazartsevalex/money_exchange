@@ -1,0 +1,40 @@
+.PocketToExchange {
+  width: 50%;
+  height: 150px;
+  padding: 25px;
+  background-color: #222;
+  color: #ddd;
+  text-decoration: none;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: 25px auto 25px;
+  grid-template-areas:
+    "subpocket_header"
+    "subpocket_amount"
+    "subpocket_rate";
+}
+.PocketToExchange:hover {
+  padding: 24px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #222;
+}
+
+.PocketToExchange header {
+  grid-area: subpocket_header;
+}
+.PocketToExchange div {
+  grid-area: subpocket_amount;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+}
+.PocketToExchange div span {
+  font-size: 25px;
+  margin-bottom: -15px;
+}
+.PocketToExchange footer {
+  grid-area: subpocket_rate;
+  text-align: right;
+}

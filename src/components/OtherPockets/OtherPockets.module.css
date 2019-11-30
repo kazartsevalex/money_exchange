@@ -1,0 +1,6 @@
+.OtherPockets {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start;
+  align-items: center;
+}

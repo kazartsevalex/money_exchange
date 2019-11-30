@@ -6,6 +6,7 @@ import classes from './Pocket.module.css';
 import History from '../../components/History/History';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
+import OtherPockets from '../../components/OtherPockets/OtherPockets';
 import * as actions from '../../store/actions/index';
 
 class Pocket extends React.Component {
@@ -21,29 +22,6 @@ class Pocket extends React.Component {
     console.log('currency from: ', this.props.match.params.currencyFrom)
     this.props.onGetExchangeRates(this.props.match.params.currencyFrom);
     // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
-  }
-
-  getOtherPockets = (params) => {
-    const otherPockets = [];
-    const { pockets } = this.props.pockets;
-
-    for (let index in pockets) {
-      if (params.currencyFrom !== pockets[index].currency) {
-        otherPockets.push(
-          <Link
-            to={`/${params.currencyFrom}/exchange/${pockets[index].currency}`}
-            className={classes.PocketToExchange}
-            key={pockets[index].currency}
-          >
-            <header>To {pockets[index].currency}</header>
-            <div><span>{pockets[index].sign}</span>{pockets[index].amount.toFixed(2)}</div>
-            <footer>{pockets[params.currencyFrom].sign} 1 = {pockets[index].sign} {this.props.rates.rates[pockets[index].currency].toFixed(2)}</footer>
-          </Link>
-        );
-      }
-    }
-
-    return otherPockets;
   }
 
   getValidValue = (val) => {
@@ -86,7 +64,6 @@ class Pocket extends React.Component {
     const pocketFrom = this.props.pockets.pockets[params.currencyFrom] || null;
 
     if (!pocketFrom) return <Redirect to='/' />;
-    const otherPockets = this.getOtherPockets(params);
     const pocketTo = this.props.pockets.pockets[params.currencyTo] || null;
 
     let pocketToOutput = null;
@@ -169,9 +146,11 @@ class Pocket extends React.Component {
         <div className={classes.PocketBottom}>
           <Route path='/:currencyFrom' exact component={History} />
           <Route path='/:currencyFrom/exchange' exact>
-            <div className={classes.OtherPockets}>
-              {otherPockets}
-            </div>
+            <OtherPockets
+              currencyFrom={params.currencyFrom}
+              pockets={this.props.pockets.pockets}
+              rates={this.props.rates.rates}
+            />
           </Route>
           {pocketToOutput}
           {exchangeUI}
