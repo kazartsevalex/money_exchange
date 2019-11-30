@@ -8,42 +8,6 @@
     "pocket_history";
 }
 
-.PocketHeader, .PocketTo {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-flow: row;
-  grid-area: pocket_header;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(45deg,
-                rgb(2, 0, 36) 0%,
-                rgb(3, 19, 83) 50%,
-                rgb(51, 0, 88) 100%);
-}
-
-.PocketTo {
-  grid-area: unset;
-  margin: -25px;
-  height: 200px;
-  background: linear-gradient(45deg,
-                rgb(51, 0, 88) 0%,
-                rgb(3, 19, 83) 50%,
-                rgb(2, 0, 36) 100%);
-}
-
-.Amount {
-  color: #fff;
-  font-size: 50px;
-}
-.AmountHalf {
-  width: 50%;
-}
-
-.Amount span {
-  font-size: 25px;
-  margin-left: 15px;
-}
-
 .PocketActions {
   display: flex;
   justify-content: center;

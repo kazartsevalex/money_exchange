@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import classes from './Pocket.module.css';
 import History from '../../components/History/History';
-import Input from '../../components/Input/Input';
 import ExchangeUI from '../../components/ExchangeUI/ExchangeUI';
 import OtherPockets from '../../components/OtherPockets/OtherPockets';
+import PocketCard from '../../components/PocketCard/PocketCard';
 import * as actions from '../../store/actions/index';
 
 class Pocket extends React.Component {
@@ -19,7 +19,6 @@ class Pocket extends React.Component {
   }
 
   componentDidMount() {
-    console.log('currency from: ', this.props.match.params.currencyFrom)
     this.props.onGetExchangeRates(this.props.match.params.currencyFrom);
     // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
   }
@@ -82,35 +81,19 @@ class Pocket extends React.Component {
     let pocketToOutput = null;
     let fromText = null;
     let exchangeUI = null;
-    let input = null;
-    let currentPocketAmountClass = [classes.Amount];
 
     if (pocketTo) {
       fromText = 'From';
-      currentPocketAmountClass = [classes.Amount, classes.AmountHalf].join(' ');
-      input = (
-        <Input
-          sign="-"
-          currencySign={pocketFrom.sign}
-          value={this.state.currencyFromAmount}
-          changed={(e) => this.setCurrencyFromAmount(e, params.currencyTo)}
-        />
-      );
 
       pocketToOutput = (
-        <div className={classes.PocketTo}>
-          <div className={currentPocketAmountClass}>
-            To
-            <span>{pocketTo.sign}</span>
-            {pocketTo.amount.toFixed(2)}
-          </div>
-          <Input
-            sign="+"
-            currencySign={pocketTo.sign}
-            value={this.state.currencyToAmount}
-            changed={(e) => this.setCurrencyToAmount(e, params.currencyTo)}
-          />
-        </div>
+        <PocketCard
+          type="to"
+          text="To"
+          pocketToDefined={!!pocketTo}
+          pocket={pocketTo}
+          currencyAmount={this.state.currencyToAmount}
+          changed={(e) => this.setCurrencyToAmount(e, params.currencyTo)}
+        />
       );
 
       const disabled = parseFloat(this.state.currencyFromAmount) === parseFloat(this.state.currencyToAmount);
@@ -130,14 +113,13 @@ class Pocket extends React.Component {
 
     return (
       <div className={classes.Pocket}>
-        <div className={classes.PocketHeader}>
-          <div className={currentPocketAmountClass}>
-            {fromText}
-            <span>{pocketFrom.sign}</span>
-            {pocketFrom.amount.toFixed(2)}
-          </div>
-          {input}
-        </div>
+        <PocketCard
+          text={fromText}
+          pocketToDefined={!!pocketTo}
+          pocket={pocketFrom}
+          currencyAmount={this.state.currencyFromAmount}
+          changed={(e) => this.setCurrencyFromAmount(e, params.currencyTo)}
+        />
         <div className={classes.PocketActions}>
           <Route path='/:currencyFrom' exact>
             <Link to={`/${params.currencyFrom}/exchange`}>Exchange</Link>
