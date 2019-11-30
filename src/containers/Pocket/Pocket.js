@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import classes from './Pocket.module.css';
 import History from '../../components/History/History';
 import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
+import ExchangeUI from '../../components/ExchangeUI/ExchangeUI';
 import OtherPockets from '../../components/OtherPockets/OtherPockets';
 import * as actions from '../../store/actions/index';
 
@@ -22,6 +22,19 @@ class Pocket extends React.Component {
     console.log('currency from: ', this.props.match.params.currencyFrom)
     this.props.onGetExchangeRates(this.props.match.params.currencyFrom);
     // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
+  }
+
+  onExchangeClick = (currencyFrom, currencyTo) => {
+    this.props.makeExchange(
+      this.state.currencyFromAmount,
+      this.state.currencyToAmount,
+      currencyFrom,
+      currencyTo
+    );
+    this.setState({
+      currencyFromAmount: 0,
+      currencyToAmount: 0
+    });
   }
 
   getValidValue = (val) => {
@@ -76,14 +89,12 @@ class Pocket extends React.Component {
       fromText = 'From';
       currentPocketAmountClass = [classes.Amount, classes.AmountHalf].join(' ');
       input = (
-        <div className={classes.InputContainer}>
-          <Input
-            sign="-"
-            currencySign={pocketFrom.sign}
-            value={this.state.currencyFromAmount}
-            changed={(e) => this.setCurrencyFromAmount(e, params.currencyTo)}
-          />
-        </div>
+        <Input
+          sign="-"
+          currencySign={pocketFrom.sign}
+          value={this.state.currencyFromAmount}
+          changed={(e) => this.setCurrencyFromAmount(e, params.currencyTo)}
+        />
       );
 
       pocketToOutput = (
@@ -105,26 +116,15 @@ class Pocket extends React.Component {
       const disabled = parseFloat(this.state.currencyFromAmount) === parseFloat(this.state.currencyToAmount);
 
       exchangeUI = (
-        <div className={classes.ExchangeUI}>
-          {pocketFrom.sign} 1 = {pocketTo.sign} {this.props.rates.rates[pocketTo.currency].toFixed(5)}
-          <Button
-            disabled={disabled}
-            clicked={() => {
-              this.props.makeExchange(
-                this.state.currencyFromAmount,
-                this.state.currencyToAmount,
-                pocketFrom.currency,
-                pocketTo.currency
-              );
-              this.setState({
-                currencyFromAmount: 0,
-                currencyToAmount: 0
-              });
-            }}
-          >
-            Exchange
-          </Button>
-        </div>
+        <ExchangeUI
+          pocketFromSign={pocketFrom.sign}
+          pocketToSign={pocketTo.sign}
+          pocketToCurrency={pocketTo.currency}
+          pocketFromCurrency={pocketFrom.currency}
+          disabled={disabled}
+          rates={this.props.rates.rates}
+          clicked={() => { this.onExchangeClick(pocketFrom.currency, pocketTo.currency); }}
+        />
       );
     }
 

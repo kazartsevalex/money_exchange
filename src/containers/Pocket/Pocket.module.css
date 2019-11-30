@@ -70,10 +70,3 @@
   grid-area: pocket_history;
   padding: 25px;
 }
-
-.ExchangeUI {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25px 0 0;
-}
