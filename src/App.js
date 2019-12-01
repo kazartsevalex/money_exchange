@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 // import { connect } from 'react-redux';
 
 import Header from './components/Header/Header';
@@ -11,10 +11,13 @@ function App() {
   return (
     <div className={classes.App}>
       <Header />
-      <Route path='/' exact component={PocketsList} />
-      <Route path='/:currencyFrom' exact component={Pocket} />
-      <Route path='/:currencyFrom/exchange' exact component={Pocket} />
-      <Route path='/:currencyFrom/exchange/:currencyTo' component={Pocket} />
+      <Switch>
+        <Route path='/' exact component={PocketsList} />
+        <Route path='/:currencyFrom' exact component={Pocket} />
+        <Route path='/:currencyFrom/exchange' exact component={Pocket} />
+        <Route path='/:currencyFrom/exchange/:currencyTo' component={Pocket} />
+        <Redirect to='/' />
+      </Switch>
     </div>
   );
 }
