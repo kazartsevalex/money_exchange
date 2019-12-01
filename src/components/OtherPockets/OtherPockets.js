@@ -5,8 +5,7 @@ import OtherPocket from './OtherPocket/OtherPocket';
 
 const otherPockets = ({ pockets, currencyFrom, rates }) => {
   const arr = [];
-  console.log(pockets)
-
+  
   for (let index in pockets) {
     if (currencyFrom !== pockets[index].currency) {
       arr.push(

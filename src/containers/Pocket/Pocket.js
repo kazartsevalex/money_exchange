@@ -9,7 +9,7 @@ import OtherPockets from '../../components/OtherPockets/OtherPockets';
 import PocketCard from '../../components/PocketCard/PocketCard';
 import * as actions from '../../store/actions/index';
 
-class Pocket extends React.Component {
+export class Pocket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -125,7 +125,7 @@ class Pocket extends React.Component {
             <Link to={`/${params.currencyFrom}/exchange`}>Exchange</Link>
           </Route>
         </div>
-        <div className={classes.PocketBottom}>
+        <footer className={classes.PocketBottom}>
           <Route path='/:currencyFrom' exact component={History} />
           <Route path='/:currencyFrom/exchange' exact>
             <OtherPockets
@@ -136,7 +136,7 @@ class Pocket extends React.Component {
           </Route>
           {pocketToOutput}
           {exchangeUI}
-        </div>
+        </footer>
       </div>
     );
   }
