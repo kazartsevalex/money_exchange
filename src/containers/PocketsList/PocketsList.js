@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PocketItem from '../../components/PocketItem/PocketItem';
 
-class PocketsList extends React.Component {
+export class PocketsList extends React.Component {
   render() {
     const pocketItems = [];
     for (let pocket in this.props.pockets) {
