@@ -20,7 +20,7 @@ export class Pocket extends React.Component {
 
   componentDidMount() {
     this.props.onGetExchangeRates(this.props.match.params.currencyFrom);
-    // setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currency);
+    setInterval(this.props.onGetExchangeRates, 10000, this.props.match.params.currencyFrom);
   }
 
   onExchangeClick = (currencyFrom, currencyTo) => {
